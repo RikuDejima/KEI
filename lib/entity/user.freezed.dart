@@ -13,13 +13,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+User _$UserFromJson(Map<String, dynamic> json) {
+  return _User.fromJson(json);
+}
+
 /// @nodoc
 class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
       {required String role,
-      required String storeName,
+      String? storeName,
       String? introduce,
       String? image1,
       String? image2,
@@ -41,6 +45,10 @@ class _$UserTearOff {
       uid: uid,
     );
   }
+
+  User fromJson(Map<String, Object?> json) {
+    return User.fromJson(json);
+  }
 }
 
 /// @nodoc
@@ -49,7 +57,7 @@ const $User = _$UserTearOff();
 /// @nodoc
 mixin _$User {
   String get role => throw _privateConstructorUsedError;
-  String get storeName => throw _privateConstructorUsedError;
+  String? get storeName => throw _privateConstructorUsedError;
   String? get introduce => throw _privateConstructorUsedError;
   String? get image1 => throw _privateConstructorUsedError;
   String? get image2 => throw _privateConstructorUsedError;
@@ -59,6 +67,7 @@ mixin _$User {
   String? get instaAcount => throw _privateConstructorUsedError;
   String? get uid => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
@@ -69,7 +78,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res>;
   $Res call(
       {String role,
-      String storeName,
+      String? storeName,
       String? introduce,
       String? image1,
       String? image2,
@@ -109,7 +118,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       storeName: storeName == freezed
           ? _value.storeName
           : storeName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -153,7 +162,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   $Res call(
       {String role,
-      String storeName,
+      String? storeName,
       String? introduce,
       String? image1,
       String? image2,
@@ -194,7 +203,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       storeName: storeName == freezed
           ? _value.storeName
           : storeName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -232,11 +241,11 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$_User implements _User {
+@JsonSerializable()
+class _$_User extends _User {
   const _$_User(
       {required this.role,
-      required this.storeName,
+      this.storeName,
       this.introduce,
       this.image1,
       this.image2,
@@ -244,12 +253,15 @@ class _$_User implements _User {
       this.location,
       this.twitterAccount,
       this.instaAcount,
-      this.uid});
+      this.uid})
+      : super._();
+
+  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
   final String role;
   @override
-  final String storeName;
+  final String? storeName;
   @override
   final String? introduce;
   @override
@@ -309,12 +321,17 @@ class _$_User implements _User {
   @override
   _$UserCopyWith<_User> get copyWith =>
       __$UserCopyWithImpl<_User>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserToJson(this);
+  }
 }
 
-abstract class _User implements User {
+abstract class _User extends User {
   const factory _User(
       {required String role,
-      required String storeName,
+      String? storeName,
       String? introduce,
       String? image1,
       String? image2,
@@ -323,11 +340,14 @@ abstract class _User implements User {
       String? twitterAccount,
       String? instaAcount,
       String? uid}) = _$_User;
+  const _User._() : super._();
+
+  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
   String get role;
   @override
-  String get storeName;
+  String? get storeName;
   @override
   String? get introduce;
   @override

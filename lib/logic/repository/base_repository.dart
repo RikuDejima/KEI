@@ -22,7 +22,7 @@ class FirestoreResponse<T> extends CommonResponse<T> {
 
 class CommonResponse<T> {
   T? _data;
-  T get data => _data!;
+  T? get data => _data;
   set data(val) {
     _data = val;
   }
