@@ -20,6 +20,7 @@ class UserRepository extends BaseRepository {
         if (error.code != 'permission-denied') {
           ret.errorReason = error.toString();
         }
+        throw error; 
       },
     );
     final data = snapshot?.data();
