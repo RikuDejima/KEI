@@ -17,11 +17,11 @@ class User with _$User {
     String? location,
     String? twitterAccount,
     String? instaAcount,
-    String? uid,
   }) = _User;
 
-
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  
-  DocumentReference get ref => FirebaseFirestore.instance.collection(Collection.user.key).doc(uid);
+
+  DocumentReference get ref =>
+      FirebaseFirestore.instance.collection(Collection.user.key).doc(uid);
+
 }

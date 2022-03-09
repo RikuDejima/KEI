@@ -28,11 +28,12 @@ enum FirebaseAuthResultStatus {
 
 enum LoginLifeCycle {
   initializing,
+  register,
   login,
 }
 
 extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
-  String exceptionMessage() {
+  String exceptionMessage(WidgetRef ref) {
     String? message = '';
     switch (this) {
       case FirebaseAuthResultStatus.Successful:
@@ -42,10 +43,10 @@ extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
         message = '指定されたメールアドレスは既に使用されています。';
         break;
       case FirebaseAuthResultStatus.WrongPassword:
-        message = 'パスワードが違います。';
+        message = 'メールアドレスまたはパスワードが間違っています';
         break;
       case FirebaseAuthResultStatus.InvalidEmail:
-        message = 'メールアドレスが不正です。';
+        message = 'メールアドレスまたはパスワードが間違っています';
         break;
       case FirebaseAuthResultStatus.UserNotFound:
         message = '指定されたユーザーは存在しません。';
@@ -60,7 +61,11 @@ extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
         message = '指定されたユーザーはこの操作を許可していません。';
         break;
       case FirebaseAuthResultStatus.Undefined:
-        message = '不明なエラーが発生しました。';
+        if(ref.read(loginLifeCycleState) == LoginLifeCycle.initializing){
+          message = 'ログインできませんでした';
+        } else {
+          message = 'アカウントを作成できませんでした';
+        }
         break;
     }
     return message;
@@ -121,29 +126,40 @@ class RootViewController {
   }
   // void initializing(){}
 
-  void attempAutoLogin() async {
+  Future<void> attempAutoLogin() async {
     final res = CommonResponse<User>();
     final auth.User? firebaseUser =
         await auth.FirebaseAuth.instance.authStateChanges().first;
     print(firebaseUser?.uid);
     final CommonResponse<User>? userResponce;
 
-    if (firebaseUser != null) {
-      _read(loginLifeCycleState.notifier).state = LoginLifeCycle.login;
-      userResponce = await _read(userRepository).getUser(firebaseUser.uid);
-    } else {
-      _read(loginLifeCycleState.notifier).state = LoginLifeCycle.initializing;
-      userResponce = null;
+    try {
+      if (firebaseUser != null) {
+        _read(loginLifeCycleState.notifier).state = LoginLifeCycle.login;
+        userResponce = await _read(userRepository).getUser(firebaseUser.uid);
+      } else {
+        _read(loginLifeCycleState.notifier).state = LoginLifeCycle.initializing;
+        userResponce = null;
+        return;
+      }
+
+      if (userResponce.hasData) {
+        _read(loginUserState.notifier).state = userResponce.data;
+        _read(firebaseUserState.notifier).state = firebaseUser;
+        _read(routeController).push(AppRoute.home);
+        return;
+      } else {
+        print(userResponce.data?.role);
+      }
+    } on FirebaseException catch (e) {
+      print(e.code);
+      _read(firebaseAuthResultStatus.notifier).state = handleException(e);
       return;
     }
-
-    if (userResponce.hasData) {
-      _read(loginUserState.notifier).state = userResponce.data;
-      _read(firebaseUserState.notifier).state = firebaseUser;
-      // _read(routeController).push(AppRoute.home);
-    } else {
-      print(userResponce.errorReason);
-    }
+    // else {
+    //   print('${userResponce.errorReason}:error');
+    //   // return showErrorDialog(context, message)
+    // }
   }
 
   // void _emailVerify() {}
@@ -173,9 +189,9 @@ class RootViewController {
   }
 
   Future<void> createAccount() async {
-    print(_read(mailAddress.notifier).state);
-    print(_read(password.notifier).state);
     try {
+      final auth.User? firebaseUser;
+      final DocumentReference ref;
       auth.UserCredential userCredential =
           await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _read(mailAddress.notifier).state,
@@ -183,13 +199,19 @@ class RootViewController {
       );
       if (userCredential.user != null) {
         print('succeed');
+        firebaseUser = userCredential.user;
+        ref = FirebaseFirestore.instance
+            .collection(Collection.user.key)
+            .doc(firebaseUser!.uid);
         _read(firebaseAuthResultStatus.notifier).state =
             FirebaseAuthResultStatus.Successful;
+            
+        await ref.set(const User(role: 'customer').toJson());
       } else {
         _read(firebaseAuthResultStatus.notifier).state =
             FirebaseAuthResultStatus.Undefined;
       }
-    } on auth.FirebaseAuthException catch (e) {
+    } on auth.FirebaseException catch (e) {
       print(e.code);
       _read(firebaseAuthResultStatus.notifier).state = handleException(e);
       return;
@@ -197,16 +219,19 @@ class RootViewController {
     attempAutoLogin();
   }
 
-  String? validateEmail(String? value) {
-    String pattern =
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?)*$";
-    RegExp regex = RegExp(pattern);
-    if (value == null || value.isEmpty || !regex.hasMatch(value)) {
-      return '形式が正しくありません';
-    } else {
-      return null;
+  String? validateEmail(String? email) {
+    RegExp regex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (email == null || email.isEmpty) {
+      return 'メールアドレスが未設定です';
+    } else if (!regex.hasMatch(email)) {
+      return 'メールアドレスが不正です';
+    }
+  }
+  String? validatePassword(String? email) {
+    if (email == null || email.isEmpty) {
+      return 'パスワードが未設定です';
+    } else if (email.trim().contains('　') || email.trim().contains(' ')) {
+      return '空文字は入力できません';
     }
   }
 }

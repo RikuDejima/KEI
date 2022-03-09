@@ -25,6 +25,7 @@ class UserRepository extends BaseRepository {
     );
     final data = snapshot?.data();
     if (snapshot == null || !snapshot.exists || data == null) {
+      print("couldn't get user");
       return ret;
     }
     ret.data = data;

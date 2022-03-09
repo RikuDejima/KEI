@@ -39,7 +39,7 @@ class RegisterScreen extends HookConsumerWidget {
                       FirebaseAuthResultStatus.Successful) {
                     viewController.showErrorDialog(
                       context,
-                      ref.read(firebaseAuthResultStatus)!.exceptionMessage(),
+                      ref.read(firebaseAuthResultStatus)!.exceptionMessage(ref),
                     );
                   }
                 },
@@ -56,7 +56,7 @@ class RegisterScreen extends HookConsumerWidget {
                       FirebaseAuthResultStatus.Successful) {
                     viewController.showErrorDialog(
                       context,
-                      ref.read(firebaseAuthResultStatus)!.exceptionMessage(),
+                      ref.read(firebaseAuthResultStatus)!.exceptionMessage(ref),
                     );
                   }
                 },
