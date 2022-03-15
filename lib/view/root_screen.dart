@@ -11,7 +11,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class RootScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final viewController = ref.watch(rootViewController);
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     useEffect(() {
@@ -19,7 +18,6 @@ class RootScreen extends HookConsumerWidget {
       if (ref.read(firebaseUserState.notifier).state != null) {
         ref.read(routeController).push(AppRoute.home);
       }
-      // return;
     }, []);
 
     return Scaffold(
@@ -58,7 +56,7 @@ class RootScreen extends HookConsumerWidget {
                       contentPadding: const EdgeInsets.all(15),
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: 'メールアドレス',
+                      hintText: 'メールアドレスを入力してください',
                       hintStyle: const TextStyle(
                         fontSize: 13,
                         color: Color(0xFFA7A7A7),
@@ -78,7 +76,7 @@ class RootScreen extends HookConsumerWidget {
                     // controller: TextEditingController(
                     //     text: ref.read(password.notifier).state),
                     decoration: InputDecoration(
-                      hintText: 'パスワード',
+                      hintText: 'パスワードを入力してください',
                       hintStyle: const TextStyle(
                         fontSize: 13,
                         color: Color(0xFFA7A7A7),
@@ -156,7 +154,7 @@ class RootScreen extends HookConsumerWidget {
                       }
                     },
                     child: TextButton(
-                      onPressed: () => ref.read(routeController).push(AppRoute.home),
+                      onPressed: () => ref.read(routeController).push(AppRoute.register),
                       child: const Text(
                         'アカウント作成はこちらから',
                         style: TextStyle(

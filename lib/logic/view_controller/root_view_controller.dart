@@ -23,6 +23,7 @@ enum FirebaseAuthResultStatus {
   UserDisabled,
   OperationNotAllowed,
   TooManyRequests,
+  Weakpassword,
   Undefined,
 }
 
@@ -60,10 +61,14 @@ extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
       case FirebaseAuthResultStatus.TooManyRequests:
         message = '指定されたユーザーはこの操作を許可していません。';
         break;
+      case FirebaseAuthResultStatus.Weakpassword:
+        message = 'パスワードが弱いです';
+        break;
       case FirebaseAuthResultStatus.Undefined:
-        if(ref.read(loginLifeCycleState) == LoginLifeCycle.initializing){
+        if (ref.read(loginLifeCycleState) == LoginLifeCycle.initializing) {
           message = 'ログインできませんでした';
         } else {
+          print(ref.read(loginLifeCycleState.notifier).state);
           message = 'アカウントを作成できませんでした';
         }
         break;
@@ -100,6 +105,8 @@ class RootViewController {
         return FirebaseAuthResultStatus.TooManyRequests;
       case 'email-already-exists':
         return FirebaseAuthResultStatus.EmailAlreadyExists;
+      case 'weak-password':
+        return FirebaseAuthResultStatus.Weakpassword;
       default:
         return FirebaseAuthResultStatus.Undefined;
     }
@@ -191,28 +198,29 @@ class RootViewController {
   Future<void> createAccount() async {
     try {
       final auth.User? firebaseUser;
-      final DocumentReference ref;
+      final DocumentReference doc;
       auth.UserCredential userCredential =
           await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _read(mailAddress.notifier).state,
-        password: _read(password.notifier).state,
+        email: _read(mailAddress.notifier).state.trim(),
+        password: _read(password.notifier).state.trim(),
       );
       if (userCredential.user != null) {
         print('succeed');
         firebaseUser = userCredential.user;
-        ref = FirebaseFirestore.instance
+        doc = FirebaseFirestore.instance
             .collection(Collection.user.key)
             .doc(firebaseUser!.uid);
         _read(firebaseAuthResultStatus.notifier).state =
             FirebaseAuthResultStatus.Successful;
-            
-        await ref.set(const User(role: 'customer').toJson());
+        const user = User(role: 'customer');
+        await doc.set(user.toJson());
       } else {
         _read(firebaseAuthResultStatus.notifier).state =
             FirebaseAuthResultStatus.Undefined;
       }
     } on auth.FirebaseException catch (e) {
       print(e.code);
+      print('password:${_read(password.notifier).state}');
       _read(firebaseAuthResultStatus.notifier).state = handleException(e);
       return;
     }
@@ -220,18 +228,23 @@ class RootViewController {
   }
 
   String? validateEmail(String? email) {
-    RegExp regex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (email == null || email.isEmpty) {
+    final trimedEmail = email?.trim();
+    RegExp regex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (trimedEmail == null || trimedEmail.isEmpty) {
       return 'メールアドレスが未設定です';
-    } else if (!regex.hasMatch(email)) {
+    } else if (!regex.hasMatch(trimedEmail)) {
       return 'メールアドレスが不正です';
     }
   }
-  String? validatePassword(String? email) {
-    if (email == null || email.isEmpty) {
+
+  String? validatePassword(String? password) {
+    final trimedPassword = password?.trim();
+    RegExp regex = RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{10,}$');
+    if (password == null || password.isEmpty) {
       return 'パスワードが未設定です';
-    } else if (email.trim().contains('　') || email.trim().contains(' ')) {
-      return '空文字は入力できません';
-    }
+    } else if (password.length < 10) {
+      return '英数小文字大文字混在で10文字以上にして下さい';
+    } 
   }
 }

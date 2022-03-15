@@ -6,13 +6,6 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Color(0xFFFFFDD1),
-      appBar: AppBar(
-          title: const SizedBox(
-        child: Text(
-          'Home',
-          style: TextStyle(fontSize: 20),
-        ),
-      )),
       body: const Center(
         child: Text(
           'KEI',

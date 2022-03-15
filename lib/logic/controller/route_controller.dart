@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:key/main.dart';
+import 'package:key/view/register_screen.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:key/view/root_screen.dart';
@@ -9,6 +10,7 @@ final routeController = Provider((ref) => RouteController(ref.read));
 
 enum AppRoute {
   root,
+  register,
   home,
 }
 
@@ -28,6 +30,7 @@ extension AppRouteExt on AppRoute {
 
 final route = RouteMap(routes: {
   AppRoute.root.path: (data) => MaterialPage(child: RootScreen()),
+  AppRoute.register.path: (data) => MaterialPage(child: RegisterScreen()),
   AppRoute.home.path: (data) => MaterialPage(child: HomeScreen()),
 });
 
