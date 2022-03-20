@@ -10,6 +10,7 @@ class User with _$User {
   const factory User({
     required String role,
     String? storeName,
+    String? customerName,
     String? introduce,
     String? image1,
     String? image2,
@@ -21,7 +22,7 @@ class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  DocumentReference get ref =>
-      FirebaseFirestore.instance.collection(Collection.user.key).doc(uid);
+  // DocumentReference get ref =>
+  //     FirebaseFirestore.instance.collection(Collection.user.key).doc(uid);
 
 }

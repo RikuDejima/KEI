@@ -24,17 +24,18 @@ class _$UserTearOff {
   _User call(
       {required String role,
       String? storeName,
+      String? customerName,
       String? introduce,
       String? image1,
       String? image2,
       String? image3,
       String? location,
       String? twitterAccount,
-      String? instaAcount,
-      String? uid}) {
+      String? instaAcount}) {
     return _User(
       role: role,
       storeName: storeName,
+      customerName: customerName,
       introduce: introduce,
       image1: image1,
       image2: image2,
@@ -42,7 +43,6 @@ class _$UserTearOff {
       location: location,
       twitterAccount: twitterAccount,
       instaAcount: instaAcount,
-      uid: uid,
     );
   }
 
@@ -58,6 +58,7 @@ const $User = _$UserTearOff();
 mixin _$User {
   String get role => throw _privateConstructorUsedError;
   String? get storeName => throw _privateConstructorUsedError;
+  String? get customerName => throw _privateConstructorUsedError;
   String? get introduce => throw _privateConstructorUsedError;
   String? get image1 => throw _privateConstructorUsedError;
   String? get image2 => throw _privateConstructorUsedError;
@@ -65,7 +66,6 @@ mixin _$User {
   String? get location => throw _privateConstructorUsedError;
   String? get twitterAccount => throw _privateConstructorUsedError;
   String? get instaAcount => throw _privateConstructorUsedError;
-  String? get uid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -79,14 +79,14 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String role,
       String? storeName,
+      String? customerName,
       String? introduce,
       String? image1,
       String? image2,
       String? image3,
       String? location,
       String? twitterAccount,
-      String? instaAcount,
-      String? uid});
+      String? instaAcount});
 }
 
 /// @nodoc
@@ -101,6 +101,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? role = freezed,
     Object? storeName = freezed,
+    Object? customerName = freezed,
     Object? introduce = freezed,
     Object? image1 = freezed,
     Object? image2 = freezed,
@@ -108,7 +109,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? location = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
-    Object? uid = freezed,
   }) {
     return _then(_value.copyWith(
       role: role == freezed
@@ -118,6 +118,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       storeName: storeName == freezed
           ? _value.storeName
           : storeName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: customerName == freezed
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
               as String?,
       introduce: introduce == freezed
           ? _value.introduce
@@ -147,10 +151,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.instaAcount
           : instaAcount // ignore: cast_nullable_to_non_nullable
               as String?,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -163,14 +163,14 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String role,
       String? storeName,
+      String? customerName,
       String? introduce,
       String? image1,
       String? image2,
       String? image3,
       String? location,
       String? twitterAccount,
-      String? instaAcount,
-      String? uid});
+      String? instaAcount});
 }
 
 /// @nodoc
@@ -186,6 +186,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? role = freezed,
     Object? storeName = freezed,
+    Object? customerName = freezed,
     Object? introduce = freezed,
     Object? image1 = freezed,
     Object? image2 = freezed,
@@ -193,7 +194,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? location = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
-    Object? uid = freezed,
   }) {
     return _then(_User(
       role: role == freezed
@@ -203,6 +203,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       storeName: storeName == freezed
           ? _value.storeName
           : storeName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: customerName == freezed
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
               as String?,
       introduce: introduce == freezed
           ? _value.introduce
@@ -232,10 +236,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.instaAcount
           : instaAcount // ignore: cast_nullable_to_non_nullable
               as String?,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -246,14 +246,14 @@ class _$_User extends _User {
   const _$_User(
       {required this.role,
       this.storeName,
+      this.customerName,
       this.introduce,
       this.image1,
       this.image2,
       this.image3,
       this.location,
       this.twitterAccount,
-      this.instaAcount,
-      this.uid})
+      this.instaAcount})
       : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -262,6 +262,8 @@ class _$_User extends _User {
   final String role;
   @override
   final String? storeName;
+  @override
+  final String? customerName;
   @override
   final String? introduce;
   @override
@@ -276,12 +278,10 @@ class _$_User extends _User {
   final String? twitterAccount;
   @override
   final String? instaAcount;
-  @override
-  final String? uid;
 
   @override
   String toString() {
-    return 'User(role: $role, storeName: $storeName, introduce: $introduce, image1: $image1, image2: $image2, image3: $image3, location: $location, twitterAccount: $twitterAccount, instaAcount: $instaAcount, uid: $uid)';
+    return 'User(role: $role, storeName: $storeName, customerName: $customerName, introduce: $introduce, image1: $image1, image2: $image2, image3: $image3, location: $location, twitterAccount: $twitterAccount, instaAcount: $instaAcount)';
   }
 
   @override
@@ -291,6 +291,8 @@ class _$_User extends _User {
             other is _User &&
             const DeepCollectionEquality().equals(other.role, role) &&
             const DeepCollectionEquality().equals(other.storeName, storeName) &&
+            const DeepCollectionEquality()
+                .equals(other.customerName, customerName) &&
             const DeepCollectionEquality().equals(other.introduce, introduce) &&
             const DeepCollectionEquality().equals(other.image1, image1) &&
             const DeepCollectionEquality().equals(other.image2, image2) &&
@@ -299,8 +301,7 @@ class _$_User extends _User {
             const DeepCollectionEquality()
                 .equals(other.twitterAccount, twitterAccount) &&
             const DeepCollectionEquality()
-                .equals(other.instaAcount, instaAcount) &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+                .equals(other.instaAcount, instaAcount));
   }
 
   @override
@@ -308,14 +309,14 @@ class _$_User extends _User {
       runtimeType,
       const DeepCollectionEquality().hash(role),
       const DeepCollectionEquality().hash(storeName),
+      const DeepCollectionEquality().hash(customerName),
       const DeepCollectionEquality().hash(introduce),
       const DeepCollectionEquality().hash(image1),
       const DeepCollectionEquality().hash(image2),
       const DeepCollectionEquality().hash(image3),
       const DeepCollectionEquality().hash(location),
       const DeepCollectionEquality().hash(twitterAccount),
-      const DeepCollectionEquality().hash(instaAcount),
-      const DeepCollectionEquality().hash(uid));
+      const DeepCollectionEquality().hash(instaAcount));
 
   @JsonKey(ignore: true)
   @override
@@ -332,14 +333,14 @@ abstract class _User extends User {
   const factory _User(
       {required String role,
       String? storeName,
+      String? customerName,
       String? introduce,
       String? image1,
       String? image2,
       String? image3,
       String? location,
       String? twitterAccount,
-      String? instaAcount,
-      String? uid}) = _$_User;
+      String? instaAcount}) = _$_User;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -348,6 +349,8 @@ abstract class _User extends User {
   String get role;
   @override
   String? get storeName;
+  @override
+  String? get customerName;
   @override
   String? get introduce;
   @override
@@ -362,8 +365,6 @@ abstract class _User extends User {
   String? get twitterAccount;
   @override
   String? get instaAcount;
-  @override
-  String? get uid;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
