@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/state/common/login_user_state.dart';
 import 'package:key/view/util/theme.dart';
@@ -21,36 +22,38 @@ class HomeScreen extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Divider(color: Color(0xFFDDDDDD), height: 0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        '名前',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: textColor,
-                          fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: () =>
+                    ref.read(routeController).push(AppRoute.editProfile),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          '名前',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: textColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      ref.read(loginUserState.notifier).state?.customerName ??
+                    Text(
+                      // onPressed: () =>
+                      //     ref.read(routeController).push(AppRoute.editProfile),
+                      // child: Text(
+                      ref.read(loginUserState.notifier).state?.name ??
                           "未設定",
                       style: TextStyle(fontSize: 14, color: textColor),
+                      // ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.arrow_forward_ios),
-                    padding: EdgeInsets.all(0),
-                  )
-                ],
+                    SizedBox(width: 30),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
+                ),
               ),
               Divider(
                 color: Color(0xFFDDDDDD),

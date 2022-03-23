@@ -1,3 +1,4 @@
+import 'package:key/entity/store.dart';
 import 'package:key/logic/repository/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,16 +9,8 @@ part 'user.g.dart';
 class User with _$User {
   const User._();
   const factory User({
-    required String role,
-    String? storeName,
-    String? customerName,
-    String? introduce,
-    String? image1,
-    String? image2,
-    String? image3,
-    String? location,
-    String? twitterAccount,
-    String? instaAcount,
+    String? name,
+    Store? storeData,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

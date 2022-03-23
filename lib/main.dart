@@ -12,6 +12,11 @@ void main() async {
 
 class App extends StatelessWidget {
   @override
+  // void initState() {
+  //   super.initState();
+    
+  // }
+  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routeInformationParser: RoutemasterParser(),

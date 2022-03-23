@@ -120,12 +120,12 @@ class RootScreen extends HookConsumerWidget {
                     ),
                     onPressed: () async {
                       await ref.read(rootViewController).login();
-                      if (ref.read(firebaseAuthResultStatus.notifier).state !=
-                          FirebaseAuthResultStatus.Successful) {
+                      if (ref.read(firebaseResultStatus.notifier).state !=
+                          FirebaseResultStatus.Successful) {
                         ref.read(rootViewController).showErrorDialog(
                               context,
                               ref
-                                  .read(firebaseAuthResultStatus)!
+                                  .read(firebaseResultStatus)!
                                   .exceptionMessage(ref),
                             );
                       }
@@ -143,12 +143,12 @@ class RootScreen extends HookConsumerWidget {
                   child: TextButton(
                     onPressed: () async {
                       await ref.read(rootViewController).createAccount();
-                      if (ref.read(firebaseAuthResultStatus.notifier).state !=
-                          FirebaseAuthResultStatus.Successful) {
+                      if (ref.read(firebaseResultStatus.notifier).state !=
+                          FirebaseResultStatus.Successful) {
                         ref.read(rootViewController).showErrorDialog(
                               context,
                               ref
-                                  .read(firebaseAuthResultStatus)!
+                                  .read(firebaseResultStatus)!
                                   .exceptionMessage(ref),
                             );
                       }

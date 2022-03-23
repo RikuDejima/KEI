@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/view_controller/root_view_controller.dart';
+import 'package:key/main.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class RegisterScreen extends HookConsumerWidget {
+class RegisterStoreScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final viewController = ref.watch(rootViewController);
@@ -20,6 +21,7 @@ class RegisterScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF3B2508),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: SizedBox(
           height: screenHeight,
@@ -27,7 +29,6 @@ class RegisterScreen extends HookConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 100),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: TextFormField(
@@ -118,12 +119,12 @@ class RegisterScreen extends HookConsumerWidget {
                     ),
                     onPressed: () async {
                       await ref.read(rootViewController).createAccount();
-                      if (ref.read(firebaseAuthResultStatus.notifier).state !=
-                          FirebaseAuthResultStatus.Successful) {
+                      if (ref.read(firebaseResultStatus.notifier).state !=
+                          FirebaseResultStatus.Successful) {
                         ref.read(rootViewController).showErrorDialog(
                               context,
                               ref
-                                  .read(firebaseAuthResultStatus)!
+                                  .read(firebaseResultStatus)!
                                   .exceptionMessage(ref),
                             );
                       }

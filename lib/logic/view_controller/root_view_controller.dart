@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final rootViewController = Provider((ref) => RootViewController(ref.read));
 
-enum FirebaseAuthResultStatus {
+enum FirebaseResultStatus {
   Successful,
   EmailAlreadyExists,
   WrongPassword,
@@ -33,38 +33,38 @@ enum LoginLifeCycle {
   login,
 }
 
-extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
+extension FirebaseAuthResultStatusExt on FirebaseResultStatus {
   String exceptionMessage(WidgetRef ref) {
     String? message = '';
     switch (this) {
-      case FirebaseAuthResultStatus.Successful:
+      case FirebaseResultStatus.Successful:
         message = 'ログインに成功しました。';
         break;
-      case FirebaseAuthResultStatus.EmailAlreadyExists:
+      case FirebaseResultStatus.EmailAlreadyExists:
         message = '指定されたメールアドレスは既に使用されています。';
         break;
-      case FirebaseAuthResultStatus.WrongPassword:
+      case FirebaseResultStatus.WrongPassword:
         message = 'メールアドレスまたはパスワードが間違っています';
         break;
-      case FirebaseAuthResultStatus.InvalidEmail:
+      case FirebaseResultStatus.InvalidEmail:
         message = 'メールアドレスまたはパスワードが間違っています';
         break;
-      case FirebaseAuthResultStatus.UserNotFound:
+      case FirebaseResultStatus.UserNotFound:
         message = '指定されたユーザーは存在しません。';
         break;
-      case FirebaseAuthResultStatus.UserDisabled:
+      case FirebaseResultStatus.UserDisabled:
         message = '指定されたユーザーは無効です。';
         break;
-      case FirebaseAuthResultStatus.OperationNotAllowed:
+      case FirebaseResultStatus.OperationNotAllowed:
         message = '指定されたユーザーはこの操作を許可していません。';
         break;
-      case FirebaseAuthResultStatus.TooManyRequests:
+      case FirebaseResultStatus.TooManyRequests:
         message = '指定されたユーザーはこの操作を許可していません。';
         break;
-      case FirebaseAuthResultStatus.Weakpassword:
+      case FirebaseResultStatus.Weakpassword:
         message = 'パスワードが弱いです';
         break;
-      case FirebaseAuthResultStatus.Undefined:
+      case FirebaseResultStatus.Undefined:
         if (ref.read(loginLifeCycleState) == LoginLifeCycle.initializing) {
           message = 'ログインできませんでした';
         } else {
@@ -77,8 +77,8 @@ extension FirebaseAuthResultStatusExt on FirebaseAuthResultStatus {
   }
 }
 
-final firebaseAuthResultStatus =
-    StateProvider<FirebaseAuthResultStatus?>((ref) => null);
+final firebaseResultStatus =
+    StateProvider<FirebaseResultStatus?>((ref) => null);
 final loginLifeCycleState =
     StateProvider<LoginLifeCycle>((ref) => LoginLifeCycle.initializing);
 final mailAddress = StateProvider<String>((ref) => '');
@@ -89,26 +89,26 @@ class RootViewController {
   final Reader _read;
   RootViewController(this._read);
 
-  FirebaseAuthResultStatus handleException(FirebaseException e) {
+  FirebaseResultStatus handleException(FirebaseException e) {
     switch (e.code) {
       case 'invalid-email':
-        return FirebaseAuthResultStatus.InvalidEmail;
+        return FirebaseResultStatus.InvalidEmail;
       case 'wrong-password':
-        return FirebaseAuthResultStatus.WrongPassword;
+        return FirebaseResultStatus.WrongPassword;
       case 'user-disabled':
-        return FirebaseAuthResultStatus.UserDisabled;
+        return FirebaseResultStatus.UserDisabled;
       case 'user-not-found':
-        return FirebaseAuthResultStatus.UserNotFound;
+        return FirebaseResultStatus.UserNotFound;
       case 'operation-not-allowed':
-        return FirebaseAuthResultStatus.OperationNotAllowed;
+        return FirebaseResultStatus.OperationNotAllowed;
       case 'too-many-requests':
-        return FirebaseAuthResultStatus.TooManyRequests;
+        return FirebaseResultStatus.TooManyRequests;
       case 'email-already-exists':
-        return FirebaseAuthResultStatus.EmailAlreadyExists;
+        return FirebaseResultStatus.EmailAlreadyExists;
       case 'weak-password':
-        return FirebaseAuthResultStatus.Weakpassword;
+        return FirebaseResultStatus.Weakpassword;
       default:
-        return FirebaseAuthResultStatus.Undefined;
+        return FirebaseResultStatus.Undefined;
     }
   }
 
@@ -116,14 +116,14 @@ class RootViewController {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext dialogContext) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: Text(message!),
           actions: <Widget>[
             TextButton(
               child: Text('OK'),
               onPressed: () {
-                Navigator.pop(dialogContext);
+                Navigator.pop(context);
               },
             ),
           ],
@@ -153,14 +153,16 @@ class RootViewController {
       if (userResponce.hasData) {
         _read(loginUserState.notifier).state = userResponce.data;
         _read(firebaseUserState.notifier).state = firebaseUser;
-        _read(routeController).push(AppRoute.home);
+        _read(routeController).replace(AppRoute.home);
         return;
       } else {
-        print(userResponce.data?.role);
+        // print(userResponce.data?.role);
       }
+      _read(firebaseResultStatus.notifier).state =
+          FirebaseResultStatus.Successful;
     } on FirebaseException catch (e) {
       print(e.code);
-      _read(firebaseAuthResultStatus.notifier).state = handleException(e);
+      _read(firebaseResultStatus.notifier).state = handleException(e);
       return;
     }
     // else {
@@ -181,15 +183,15 @@ class RootViewController {
       );
       if (userCredential.user != null) {
         print('succeed');
-        _read(firebaseAuthResultStatus.notifier).state =
-            FirebaseAuthResultStatus.Successful;
+        _read(firebaseResultStatus.notifier).state =
+            FirebaseResultStatus.Successful;
       } else {
-        _read(firebaseAuthResultStatus.notifier).state =
-            FirebaseAuthResultStatus.Undefined;
+        _read(firebaseResultStatus.notifier).state =
+            FirebaseResultStatus.Undefined;
       }
     } on auth.FirebaseAuthException catch (e) {
       print(e.code);
-      _read(firebaseAuthResultStatus.notifier).state = handleException(e);
+      _read(firebaseResultStatus.notifier).state = handleException(e);
       return;
     }
     attempAutoLogin();
@@ -210,18 +212,18 @@ class RootViewController {
         doc = FirebaseFirestore.instance
             .collection(Collection.user.key)
             .doc(firebaseUser!.uid);
-        _read(firebaseAuthResultStatus.notifier).state =
-            FirebaseAuthResultStatus.Successful;
-        const user = User(role: 'customer');
+        _read(firebaseResultStatus.notifier).state =
+            FirebaseResultStatus.Successful;
+        const user = User();
         await doc.set(user.toJson());
       } else {
-        _read(firebaseAuthResultStatus.notifier).state =
-            FirebaseAuthResultStatus.Undefined;
+        _read(firebaseResultStatus.notifier).state =
+            FirebaseResultStatus.Undefined;
       }
     } on auth.FirebaseException catch (e) {
       print(e.code);
       print('password:${_read(password.notifier).state}');
-      _read(firebaseAuthResultStatus.notifier).state = handleException(e);
+      _read(firebaseResultStatus.notifier).state = handleException(e);
       return;
     }
     attempAutoLogin();
@@ -245,6 +247,6 @@ class RootViewController {
       return 'パスワードが未設定です';
     } else if (password.length < 10) {
       return '英数小文字大文字混在で10文字以上にして下さい';
-    } 
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum Collection {
   user,
+  store,
 }
 
 extension CollectionExtension on Collection {
