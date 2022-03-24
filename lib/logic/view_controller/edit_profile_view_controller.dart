@@ -32,7 +32,7 @@ class EditProfileController {
       await FirebaseFirestore.instance
           .collection(Collection.user.key)
           .doc(_read(firebaseUserState.notifier).state!.uid)
-          .update({'customerName': _read(userName.notifier).state});
+          .update({'name': _read(userName.notifier).state});
     } catch (e) {
       print(e);
       return;

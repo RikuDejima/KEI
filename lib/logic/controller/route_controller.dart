@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:key/main.dart';
 import 'package:key/view/edit_profile_screen.dart';
 import 'package:key/view/register_screen.dart';
+import 'package:key/view/register_store.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:key/view/root_screen.dart';
@@ -11,9 +12,10 @@ final routeController = Provider((ref) => RouteController(ref.read));
 
 enum AppRoute {
   root,
-  register,
+  registerUser,
   home,
   editProfile,
+  registerStore,
 }
 
 extension AppRouteExt on AppRoute {
@@ -21,8 +23,12 @@ extension AppRouteExt on AppRoute {
     switch (this) {
       case AppRoute.root:
         return '/';
+      case AppRoute.registerUser:
+       return '/register';
       case AppRoute.editProfile:
         return '/home/editProfile';
+      case AppRoute.registerStore:
+        return '/home/registerStore';
       default:
         return '/${toString().split('.').last}';
     }
@@ -34,9 +40,10 @@ extension AppRouteExt on AppRoute {
 
 final route = RouteMap(routes: {
   AppRoute.root.path: (data) => MaterialPage(child: RootScreen()),
-  AppRoute.register.path: (data) => MaterialPage(child: RegisterStoreScreen()),
+  AppRoute.registerUser.path: (data) => MaterialPage(child: RegisterUserScreen()),
   AppRoute.home.path: (data) => MaterialPage(child: HomeScreen()),
   AppRoute.editProfile.path: (data) => MaterialPage(child: EditProfileScreen()),
+  AppRoute.registerStore.path: (data) => MaterialPage(child: RegisterStoreScreen()),
 });
 
 final routemaster = RoutemasterDelegate(routesBuilder: (context) => route);

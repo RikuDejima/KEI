@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
+import 'package:key/logic/view_controller/register_store_view_controller.dart';
 import 'package:key/logic/view_controller/root_view_controller.dart';
 import 'package:key/main.dart';
 import 'package:routemaster/routemaster.dart';
@@ -9,7 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class RegisterStoreScreen extends HookConsumerWidget {
+class RegisterUserScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final viewController = ref.watch(rootViewController);

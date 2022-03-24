@@ -9,7 +9,7 @@ part of 'store.dart';
 _$_Store _$$_StoreFromJson(Map<String, dynamic> json) => _$_Store(
       storeName: json['storeName'] as String,
       location: json['location'] as String,
-      topImage: json['topImage'] as String,
+      topImage: json['topImage'] as String?,
       introduce: json['introduce'] as String?,
       subImages: (json['subImages'] as List<dynamic>?)
           ?.map((e) => e as String)

@@ -24,7 +24,7 @@ class _$StoreTearOff {
   _Store call(
       {required String storeName,
       required String location,
-      required String topImage,
+      String? topImage,
       String? introduce,
       List<String>? subImages,
       String? twitterAccount,
@@ -52,7 +52,7 @@ const $Store = _$StoreTearOff();
 mixin _$Store {
   String get storeName => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
-  String get topImage => throw _privateConstructorUsedError;
+  String? get topImage => throw _privateConstructorUsedError;
   String? get introduce => throw _privateConstructorUsedError;
   List<String>? get subImages => throw _privateConstructorUsedError;
   String? get twitterAccount => throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ abstract class $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      String topImage,
+      String? topImage,
       String? introduce,
       List<String>? subImages,
       String? twitterAccount,
@@ -107,7 +107,7 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
       topImage: topImage == freezed
           ? _value.topImage
           : topImage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      String topImage,
+      String? topImage,
       String? introduce,
       List<String>? subImages,
       String? twitterAccount,
@@ -174,7 +174,7 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
       topImage: topImage == freezed
           ? _value.topImage
           : topImage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -201,7 +201,7 @@ class _$_Store extends _Store {
   const _$_Store(
       {required this.storeName,
       required this.location,
-      required this.topImage,
+      this.topImage,
       this.introduce,
       this.subImages,
       this.twitterAccount,
@@ -216,7 +216,7 @@ class _$_Store extends _Store {
   @override
   final String location;
   @override
-  final String topImage;
+  final String? topImage;
   @override
   final String? introduce;
   @override
@@ -273,7 +273,7 @@ abstract class _Store extends Store {
   const factory _Store(
       {required String storeName,
       required String location,
-      required String topImage,
+      String? topImage,
       String? introduce,
       List<String>? subImages,
       String? twitterAccount,
@@ -287,7 +287,7 @@ abstract class _Store extends Store {
   @override
   String get location;
   @override
-  String get topImage;
+  String? get topImage;
   @override
   String? get introduce;
   @override

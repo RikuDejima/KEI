@@ -154,7 +154,7 @@ class RootScreen extends HookConsumerWidget {
                       }
                     },
                     child: TextButton(
-                      onPressed: () => ref.read(routeController).push(AppRoute.register),
+                      onPressed: () => ref.read(routeController).push(AppRoute.registerUser),
                       child: const Text(
                         'アカウント作成はこちらから',
                         style: TextStyle(

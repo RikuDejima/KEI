@@ -13,6 +13,8 @@ class HomeScreen extends HookConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final ScreenHeight = MediaQuery.of(context).size.width;
     final textColor = AppColor.textColor;
+    final loginUser = ref.watch(loginUserState);
+
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: SafeArea(
@@ -42,11 +44,7 @@ class HomeScreen extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      // onPressed: () =>
-                      //     ref.read(routeController).push(AppRoute.editProfile),
-                      // child: Text(
-                      ref.read(loginUserState.notifier).state?.name ??
-                          "未設定",
+                      loginUser?.name ?? "未設定",
                       style: TextStyle(fontSize: 14, color: textColor),
                       // ),
                     ),
@@ -62,7 +60,7 @@ class HomeScreen extends HookConsumerWidget {
               SizedBox(height: 15),
               Divider(color: Color(0xFFDDDDDD), height: 0),
               TextButton(
-                onPressed: () {},
+                onPressed: () => ref.read(routeController).push(AppRoute.registerStore),
                 child: const Text(
                   '加盟店登録はこちら',
                   style: TextStyle(
