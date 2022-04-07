@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:key/entity/store.dart';
 import 'package:key/entity/user.dart';
 import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/repository/base_repository.dart';
+import 'package:key/logic/repository/store_repository.dart';
 import 'package:key/logic/repository/user_repository.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/state/common/login_user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:key/logic/state/common/store_state.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -139,15 +142,21 @@ class RootViewController {
         await auth.FirebaseAuth.instance.authStateChanges().first;
     print(firebaseUser?.uid);
     final CommonResponse<User>? userResponce;
+    final CommonResponse<Store>? storeResponce;
 
     try {
       if (firebaseUser != null) {
         _read(loginLifeCycleState.notifier).state = LoginLifeCycle.login;
         userResponce = await _read(userRepository).getUser(firebaseUser.uid);
+        storeResponce = await _read(storeRepository).getStore(firebaseUser.uid); 
       } else {
         _read(loginLifeCycleState.notifier).state = LoginLifeCycle.initializing;
         userResponce = null;
         return;
+      }
+
+      if(storeResponce.hasData){
+        _read(storeState.notifier).state = storeResponce.data;
       }
 
       if (userResponce.hasData) {
@@ -155,9 +164,7 @@ class RootViewController {
         _read(firebaseUserState.notifier).state = firebaseUser;
         _read(routeController).replace(AppRoute.home);
         return;
-      } else {
-        // print(userResponce.data?.role);
-      }
+      } 
       _read(firebaseResultStatus.notifier).state =
           FirebaseResultStatus.Successful;
     } on FirebaseException catch (e) {

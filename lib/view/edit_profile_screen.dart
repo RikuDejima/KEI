@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/login_user_state.dart';
-import 'package:key/logic/view_controller/edit_profile_view_controller.dart';
+import 'package:key/logic/view_controller/user_profile_view_controller.dart';
 import 'package:key/logic/view_controller/root_view_controller.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -12,9 +12,9 @@ class EditProfileScreen extends HookConsumerWidget {
     final viewController = ref.read(editProfileViewController);
     useEffect(
       () {
-        ref.read(initialValue.notifier).state =
+        ref.read(initialValueState.notifier).state =
             ref.read(loginUserState.notifier).state?.name;
-        ref.read(isSaved.notifier).state = false;
+        ref.read(isSavedState.notifier).state = false;
       },
       [],
     );
@@ -31,7 +31,7 @@ class EditProfileScreen extends HookConsumerWidget {
           children: [
             Text('名前'),
             TextField(
-              onChanged: (str) => ref.read(userName.notifier).state = str,
+              onChanged: (str) => ref.read(userNameState.notifier).state = str,
             ),
             const Expanded(child: SizedBox()),
             SizedBox(
@@ -39,7 +39,7 @@ class EditProfileScreen extends HookConsumerWidget {
               child: TextButton(
                 onPressed: () async {
                   await viewController.save();
-                  ref.read(routeController).pop();
+                  Navigator.pop(context);
                 },
                 child: Text(
                   '保存',

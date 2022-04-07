@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:key/main.dart';
 import 'package:key/view/edit_profile_screen.dart';
 import 'package:key/view/register_screen.dart';
-import 'package:key/view/register_store.dart';
+import 'package:key/view/register_store_screen.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:key/view/root_screen.dart';

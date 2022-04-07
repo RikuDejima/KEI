@@ -33,12 +33,12 @@ class RegisterStoreScreen extends HookConsumerWidget {
           children: [
             Text('店舗名'),
             TextField(
-              onChanged: (str) => ref.read(storeName.notifier).state = str,
+              onChanged: (str) => ref.read(storeNameState.notifier).state = str,
             ),
             SizedBox(height: 30),
             Text('所在地'),
             TextField(
-              onChanged: (str) => ref.read(location.notifier).state = str,
+              onChanged: (str) => ref.read(locationState.notifier).state = str,
             ),
             const Expanded(child: SizedBox()),
             SizedBox(
@@ -46,7 +46,7 @@ class RegisterStoreScreen extends HookConsumerWidget {
               child: TextButton(
                 onPressed: () async {
                   await viewController.save();
-                  ref.read(routeController).pop();
+                  Navigator.pop(context);
                 },
                 child: Text(
                   '保存',

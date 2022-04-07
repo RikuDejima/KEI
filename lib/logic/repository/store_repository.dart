@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:key/entity/store.dart';
 import 'package:key/logic/repository/base_repository.dart';
 
-final userRepository = Provider((ref) => StoreRepository(ref.read));
+final storeRepository = Provider((ref) => StoreRepository(ref.read));
 
 class StoreRepository extends BaseRepository {
   StoreRepository(Reader read) : super(read);
@@ -13,7 +13,7 @@ class StoreRepository extends BaseRepository {
             toFirestore: (model, _) => model.toJson(),
           );
 
-  Future<CommonResponse<Store>> getUser(String uid) async {
+  Future<CommonResponse<Store>> getStore(String uid) async {
     
     final ret = CommonResponse<Store>();
     final DocumentSnapshot? snapshot = await _col.doc(uid).get().catchError(

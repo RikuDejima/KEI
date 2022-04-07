@@ -10,35 +10,35 @@ import 'package:key/logic/state/common/login_user_state.dart';
 import 'package:key/logic/view_controller/root_view_controller.dart';
 
 final editProfileViewController =
-    Provider((ref) => EditProfileController(ref.read));
+    Provider((ref) => UserProfileViewController(ref.read));
 
-final userName = StateProvider<String?>(
+final userNameState = StateProvider<String?>(
   (ref) => ref.read(loginUserState.notifier).state?.name,
 );
-final initialValue = StateProvider<String?>((ref) => null);
-final isSaved = StateProvider<bool>((ref) => false);
+final initialValueState = StateProvider<String?>((ref) => null);
+final isSavedState = StateProvider<bool>((ref) => false);
 
-class EditProfileController {
+class UserProfileViewController {
   final Reader _read;
-  EditProfileController(this._read);
+  UserProfileViewController(this._read);
 
   Future<void> save() async {
     //TO DO: make sure editedName wether edtited or not
-    print(_read(userName.notifier).state);
-    if (_read(initialValue.notifier).state == _read(userName.notifier).state) {
+    print(_read(userNameState.notifier).state);
+    if (_read(initialValueState.notifier).state == _read(userNameState.notifier).state) {
       return;
     }
     try {
       await FirebaseFirestore.instance
           .collection(Collection.user.key)
           .doc(_read(firebaseUserState.notifier).state!.uid)
-          .update({'name': _read(userName.notifier).state});
+          .update({'name': _read(userNameState.notifier).state});
     } catch (e) {
       print(e);
       return;
     }
 
     _read(loginUserState.notifier).state = _read(loginUserState)!
-        .copyWith(name: _read(userName.notifier).state);
+        .copyWith(name: _read(userNameState.notifier).state);
   }
 }
