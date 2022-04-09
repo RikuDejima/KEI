@@ -156,7 +156,7 @@ class RootViewController {
       }
 
       if(storeResponce.hasData){
-        _read(storeState.notifier).state = storeResponce.data;
+        _read(storeDataState.notifier).state = storeResponce.data;
       }
 
       if (userResponce.hasData) {

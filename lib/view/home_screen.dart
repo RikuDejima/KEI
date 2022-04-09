@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,8 +14,15 @@ final pages = StateProvider<List<Widget>>((ref) => []);
 final nowPage = StateProvider<Widget>((ref) => ref.read(pages)[0]);
 final bottomNavigationBarItems =
     StateProvider<List<BottomNavigationBarItem>>((ref) => [
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: '通知'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: AppColor.textColor,
+              ),
+              label: 'プロフィール'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications, color: AppColor.textColor),
+              label: '通知'),
         ]);
 final currentPageIndex = StateProvider<int>((ref) => 0);
 
@@ -29,7 +37,7 @@ class CustomeruserProfielPage extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: Color(0xFFDDDDDD), height: 0),
+          Divider(color: Color(0xFF553A03), height: 0),
           GestureDetector(
             onTap: () => ref.read(routeController).push(AppRoute.editProfile),
             child: Row(
@@ -58,9 +66,9 @@ class CustomeruserProfielPage extends HookConsumerWidget {
               ],
             ),
           ),
-          const Divider(color: Color(0xFFDDDDDD), height: 0),
+          const Divider(color: Color(0xFF553A03), height: 0),
           const SizedBox(height: 15),
-          const Divider(color: Color(0xFFDDDDDD), height: 0),
+          const Divider(color: Color(0xFF553A03), height: 0),
           TextButton(
             onPressed: () =>
                 ref.read(routeController).push(AppRoute.registerStore),
@@ -72,7 +80,7 @@ class CustomeruserProfielPage extends HookConsumerWidget {
               ),
             ),
           ),
-          Divider(color: Color(0xFFDDDDDD), height: 0),
+          Divider(color: Color(0xFF553A03), height: 0),
         ],
       ),
     );
@@ -91,10 +99,13 @@ class HomeScreen extends HookConsumerWidget {
       if (ref.read(pages).isEmpty) {
         ref.read(pages).add(CustomeruserProfielPage(textColor, loginUser));
         ref.read(pages).add(Center(child: Text('準備中')));
-        if (ref.read(storeState.notifier).state != null) {
+        if (ref.read(storeDataState.notifier).state != null) {
           ref.read(pages).add(StoreProfileScreen());
-          ref.read(bottomNavigationBarItems).add(const BottomNavigationBarItem(
-              icon: Icon(Icons.storefront), label: '店舗プロフィール'));
+          ref.read(bottomNavigationBarItems).add(
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.storefront, color: AppColor.textColor),
+                    label: '店舗プロフィール'),
+              );
         }
       }
     }, []);
@@ -107,6 +118,7 @@ class HomeScreen extends HookConsumerWidget {
           ref.read(nowPage.notifier).state = ref.read(pages)[index];
           ref.read(currentPageIndex.notifier).state = index;
         },
+        backgroundColor: AppColor.backgroundColor,
         currentIndex: ref.watch(currentPageIndex),
         items: ref.watch(bottomNavigationBarItems),
       ),

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:key/logic/controller/route_controller.dart';
@@ -43,15 +45,15 @@ class RootScreen extends HookConsumerWidget {
                         ref.read(rootViewController).validateEmail(value),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       contentPadding: const EdgeInsets.all(15),
                       filled: true,
@@ -82,15 +84,15 @@ class RootScreen extends HookConsumerWidget {
                         color: Color(0xFFA7A7A7),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: 30,
                       ),
                       contentPadding: const EdgeInsets.all(15),
                       filled: true,
@@ -111,11 +113,7 @@ class RootScreen extends HookConsumerWidget {
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFFD6A15C)),
                       shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
+                        RoundedRectangleBorder(borderRadius: 30),
                       ),
                     ),
                     onPressed: () async {
@@ -154,7 +152,8 @@ class RootScreen extends HookConsumerWidget {
                       }
                     },
                     child: TextButton(
-                      onPressed: () => ref.read(routeController).push(AppRoute.registerUser),
+                      onPressed: () =>
+                          ref.read(routeController).push(AppRoute.registerUser),
                       child: const Text(
                         'アカウント作成はこちらから',
                         style: TextStyle(

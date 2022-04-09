@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +34,7 @@ class RegisterStoreViewController {
       'location': _read(locationState.notifier).state,
     }).catchError((e) => print(e));
 
-    _read(storeState.notifier).state = _read(storeState)?.copyWith(
+    _read(storeDataState.notifier).state = _read(storeDataState)?.copyWith(
         storeName: _read(storeNameState.notifier).state!,
         location: _read(locationState.notifier).state!);
 
