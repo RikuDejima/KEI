@@ -7,7 +7,7 @@ import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/state/common/login_user_state.dart';
 import 'package:key/logic/state/common/store_state.dart';
-import 'package:key/view/store_profile_screen.dart';
+import 'package:key/view/screen/store_profile_screen.dart';
 import 'package:key/view/util/theme.dart';
 
 final pages = StateProvider<List<Widget>>((ref) => []);
@@ -39,7 +39,7 @@ class CustomeruserProfielPage extends HookConsumerWidget {
         children: [
           Divider(color: Color(0xFF553A03), height: 0),
           GestureDetector(
-            onTap: () => ref.read(routeController).push(AppRoute.editProfile),
+            onTap: () => ref.read(routeController).push(AppRoute.editStoreProfile),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

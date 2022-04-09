@@ -7,8 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:key/logic/repository/base_repository.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/state/common/store_state.dart';
-import 'package:key/view/home_screen.dart';
-import 'package:key/view/store_profile_screen.dart';
+import 'package:key/view/screen/home_screen.dart';
+import 'package:key/view/screen/store_profile_screen.dart';
 
 final registerStoreViewController =
     Provider((ref) => RegisterStoreViewController(ref.read));
