@@ -45,15 +45,15 @@ class RootScreen extends HookConsumerWidget {
                         ref.read(rootViewController).validateEmail(value),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       contentPadding: const EdgeInsets.all(15),
                       filled: true,
@@ -84,15 +84,15 @@ class RootScreen extends HookConsumerWidget {
                         color: Color(0xFFA7A7A7),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: 30,
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       contentPadding: const EdgeInsets.all(15),
                       filled: true,
@@ -113,7 +113,8 @@ class RootScreen extends HookConsumerWidget {
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFFD6A15C)),
                       shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(borderRadius: 30),
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
                       ),
                     ),
                     onPressed: () async {

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:key/logic/controller/route_controller.dart';
@@ -46,23 +44,27 @@ class EditProfileScreen extends HookConsumerWidget {
                 child: Text(
                   '保存',
                   style: TextStyle(
-                      color: Colors.white, fontSize: 25, fontWeight: 600),
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600),
                 ),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 7),
                   ),
-                  fixedSize: MaterialStateProperty.all(double.infinity),
+                  fixedSize: MaterialStateProperty.all(Size.infinite),
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF3B2508)),
                   shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: 32,
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(32),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       )),
