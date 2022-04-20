@@ -20,7 +20,10 @@ class EditStoreProfileScreen extends HookConsumerWidget {
     // final storeStorageRef = ref.watch(storeRepository).
 
     useEffect(() {
-      Future.microtask(() => viewController.initState());
+      Future.microtask(() {
+        print('called useEffect');
+        viewController.initState();
+      });
     }, []);
 
     return Scaffold(
@@ -101,7 +104,7 @@ class EditStoreProfileScreen extends HookConsumerWidget {
                     TextField(
                       onChanged: (str) => ref
                           .read(editStoreProfileItemsState.notifier)
-                          .state['StoreName'] = str,
+                          .state['storeName'] = str,
                       maxLength: 120,
                       controller:
                           TextEditingController(text: storeData?.storeName),
@@ -110,7 +113,6 @@ class EditStoreProfileScreen extends HookConsumerWidget {
                     Text('店舗紹介'),
                     TextField(
                       onChanged: (str) {
-                        print(str);
                         ref
                             .read(editStoreProfileItemsState.notifier)
                             .state['introduce'] = str;

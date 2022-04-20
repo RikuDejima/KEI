@@ -10,7 +10,7 @@ _$_Store _$$_StoreFromJson(Map<String, dynamic> json) => _$_Store(
       storeName: json['storeName'] as String,
       location: json['location'] as String,
       Images:
-          (json['Images'] as List<dynamic>?)?.map((e) => e as String).toList(),
+          (json['Images'] as List<dynamic>?)?.map((e) => e as String?).toList(),
       introduce: json['introduce'] as String?,
       twitterAccount: json['twitterAccount'] as String?,
       instaAcount: json['instaAcount'] as String?,

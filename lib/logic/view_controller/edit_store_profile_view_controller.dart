@@ -96,7 +96,11 @@ class EditStoreProfileViewController {
   Map<String, dynamic> _initStoreProfileItems = {};
   Future<void> initState() async {
     print(_read(editStoreProfileItemsState.notifier).state);
-    _initStoreProfileItems = _read(editStoreProfileItemsState.notifier).state;
+    _initStoreProfileItems = {
+      'storeName': _read(storeDataState.notifier).state?.storeName,
+      'Images': _read(storeDataState.notifier).state?.Images,
+      'introduce': _read(storeDataState.notifier).state?.introduce,
+    };
     List _images = _initStoreProfileItems['Images'];
     if (_images.isNotEmpty &&
         _read(storeImageUrlsState.notifier).state.isNotEmpty) {
@@ -107,6 +111,8 @@ class EditStoreProfileViewController {
 
   Future<bool> save() async {
     final Map<String, dynamic> updatedData = {};
+    final editStoreProfileItems =
+        _read(editStoreProfileItemsState.notifier).state;
 
     print('${_read(editStoreProfileItemsState.notifier).state}:editState');
     print('$_initStoreProfileItems:initState');
@@ -115,17 +121,21 @@ class EditStoreProfileViewController {
     });
     print('$updatedData:updatedData');
     if (updatedData.isEmpty) return true;
-    try {
+    // try {
       await FirebaseFirestore.instance
           .collection(Collection.store.key)
           .doc(_read(firebaseUserState.notifier).state!.uid)
-          .update(updatedData);
+          .update(updatedData)
+          .catchError((e) {
+        print(e);
+        return;
+      });
 
       _read(storeDataState.notifier).state =
           _read(storeDataState.notifier).state!.copyWith(
-                storeName: updatedData['storeName'],
-                Images: updatedData['Images'],
-                introduce: updatedData['introduce'],
+                storeName: editStoreProfileItems['storeName'],
+                Images: editStoreProfileItems['Images'],
+                introduce: editStoreProfileItems['introduce'],
               );
       print(updatedData);
       if (updatedData.containsKey('Images')) {
@@ -145,11 +155,11 @@ class EditStoreProfileViewController {
       } else {
         return true;
       }
-    } catch (e) {
-      print(updatedData);
-      print('$e:error');
-      return true;
-    }
+    // } catch (e) {
+    //   print(updatedData);
+    //   print('$e:error');
+    //   return true;
+    // }
     // return true;
   }
 }

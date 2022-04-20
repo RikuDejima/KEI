@@ -24,7 +24,7 @@ class _$StoreTearOff {
   _Store call(
       {required String storeName,
       required String location,
-      List<String>? Images,
+      List<String?>? Images,
       String? introduce,
       String? twitterAccount,
       String? instaAcount}) {
@@ -50,7 +50,7 @@ const $Store = _$StoreTearOff();
 mixin _$Store {
   String get storeName => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
-  List<String>? get Images => throw _privateConstructorUsedError;
+  List<String?>? get Images => throw _privateConstructorUsedError;
   String? get introduce => throw _privateConstructorUsedError;
   String? get twitterAccount => throw _privateConstructorUsedError;
   String? get instaAcount => throw _privateConstructorUsedError;
@@ -67,7 +67,7 @@ abstract class $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      List<String>? Images,
+      List<String?>? Images,
       String? introduce,
       String? twitterAccount,
       String? instaAcount});
@@ -102,7 +102,7 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
       Images: Images == freezed
           ? _value.Images
           : Images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String?>?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -127,7 +127,7 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      List<String>? Images,
+      List<String?>? Images,
       String? introduce,
       String? twitterAccount,
       String? instaAcount});
@@ -163,7 +163,7 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
       Images: Images == freezed
           ? _value.Images
           : Images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String?>?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,7 @@ class _$_Store extends _Store {
   @override
   final String location;
   @override
-  final List<String>? Images;
+  final List<String?>? Images;
   @override
   final String? introduce;
   @override
@@ -253,7 +253,7 @@ abstract class _Store extends Store {
   const factory _Store(
       {required String storeName,
       required String location,
-      List<String>? Images,
+      List<String?>? Images,
       String? introduce,
       String? twitterAccount,
       String? instaAcount}) = _$_Store;
@@ -266,7 +266,7 @@ abstract class _Store extends Store {
   @override
   String get location;
   @override
-  List<String>? get Images;
+  List<String?>? get Images;
   @override
   String? get introduce;
   @override

@@ -10,7 +10,7 @@ class Store with _$Store {
   const factory Store({
     required String storeName,
     required String location,
-    List<String>? Images,
+    List<String?>? Images,
     String? introduce,
     String? twitterAccount,
     String? instaAcount,
