@@ -21,10 +21,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call({String? name, Store? storeData}) {
+  _User call({String? name}) {
     return _User(
       name: name,
-      storeData: storeData,
     );
   }
 
@@ -39,7 +38,6 @@ const $User = _$UserTearOff();
 /// @nodoc
 mixin _$User {
   String? get name => throw _privateConstructorUsedError;
-  Store? get storeData => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,9 +48,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String? name, Store? storeData});
-
-  $StoreCopyWith<$Res>? get storeData;
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -66,29 +62,13 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? storeData = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      storeData: storeData == freezed
-          ? _value.storeData
-          : storeData // ignore: cast_nullable_to_non_nullable
-              as Store?,
     ));
-  }
-
-  @override
-  $StoreCopyWith<$Res>? get storeData {
-    if (_value.storeData == null) {
-      return null;
-    }
-
-    return $StoreCopyWith<$Res>(_value.storeData!, (value) {
-      return _then(_value.copyWith(storeData: value));
-    });
   }
 }
 
@@ -97,10 +77,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({String? name, Store? storeData});
-
-  @override
-  $StoreCopyWith<$Res>? get storeData;
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -115,17 +92,12 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? storeData = freezed,
   }) {
     return _then(_User(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      storeData: storeData == freezed
-          ? _value.storeData
-          : storeData // ignore: cast_nullable_to_non_nullable
-              as Store?,
     ));
   }
 }
@@ -133,18 +105,16 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_User extends _User {
-  const _$_User({this.name, this.storeData}) : super._();
+  const _$_User({this.name}) : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
   final String? name;
-  @override
-  final Store? storeData;
 
   @override
   String toString() {
-    return 'User(name: $name, storeData: $storeData)';
+    return 'User(name: $name)';
   }
 
   @override
@@ -152,15 +122,12 @@ class _$_User extends _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _User &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.storeData, storeData));
+            const DeepCollectionEquality().equals(other.name, name));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(storeData));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
 
   @JsonKey(ignore: true)
   @override
@@ -174,15 +141,13 @@ class _$_User extends _User {
 }
 
 abstract class _User extends User {
-  const factory _User({String? name, Store? storeData}) = _$_User;
+  const factory _User({String? name}) = _$_User;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
   String? get name;
-  @override
-  Store? get storeData;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

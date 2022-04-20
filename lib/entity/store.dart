@@ -10,9 +10,8 @@ class Store with _$Store {
   const factory Store({
     required String storeName,
     required String location,
-    String? topImage,
+    List<String>? Images,
     String? introduce,
-    List<String>? subImages,
     String? twitterAccount,
     String? instaAcount,
   }) = _Store;

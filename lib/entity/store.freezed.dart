@@ -24,17 +24,15 @@ class _$StoreTearOff {
   _Store call(
       {required String storeName,
       required String location,
-      String? topImage,
+      List<String>? Images,
       String? introduce,
-      List<String>? subImages,
       String? twitterAccount,
       String? instaAcount}) {
     return _Store(
       storeName: storeName,
       location: location,
-      topImage: topImage,
+      Images: Images,
       introduce: introduce,
-      subImages: subImages,
       twitterAccount: twitterAccount,
       instaAcount: instaAcount,
     );
@@ -52,9 +50,8 @@ const $Store = _$StoreTearOff();
 mixin _$Store {
   String get storeName => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
-  String? get topImage => throw _privateConstructorUsedError;
+  List<String>? get Images => throw _privateConstructorUsedError;
   String? get introduce => throw _privateConstructorUsedError;
-  List<String>? get subImages => throw _privateConstructorUsedError;
   String? get twitterAccount => throw _privateConstructorUsedError;
   String? get instaAcount => throw _privateConstructorUsedError;
 
@@ -70,9 +67,8 @@ abstract class $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      String? topImage,
+      List<String>? Images,
       String? introduce,
-      List<String>? subImages,
       String? twitterAccount,
       String? instaAcount});
 }
@@ -89,9 +85,8 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
   $Res call({
     Object? storeName = freezed,
     Object? location = freezed,
-    Object? topImage = freezed,
+    Object? Images = freezed,
     Object? introduce = freezed,
-    Object? subImages = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
   }) {
@@ -104,18 +99,14 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String,
-      topImage: topImage == freezed
-          ? _value.topImage
-          : topImage // ignore: cast_nullable_to_non_nullable
-              as String?,
+      Images: Images == freezed
+          ? _value.Images
+          : Images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
               as String?,
-      subImages: subImages == freezed
-          ? _value.subImages
-          : subImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
       twitterAccount: twitterAccount == freezed
           ? _value.twitterAccount
           : twitterAccount // ignore: cast_nullable_to_non_nullable
@@ -136,9 +127,8 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
   $Res call(
       {String storeName,
       String location,
-      String? topImage,
+      List<String>? Images,
       String? introduce,
-      List<String>? subImages,
       String? twitterAccount,
       String? instaAcount});
 }
@@ -156,9 +146,8 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
   $Res call({
     Object? storeName = freezed,
     Object? location = freezed,
-    Object? topImage = freezed,
+    Object? Images = freezed,
     Object? introduce = freezed,
-    Object? subImages = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
   }) {
@@ -171,18 +160,14 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String,
-      topImage: topImage == freezed
-          ? _value.topImage
-          : topImage // ignore: cast_nullable_to_non_nullable
-              as String?,
+      Images: Images == freezed
+          ? _value.Images
+          : Images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       introduce: introduce == freezed
           ? _value.introduce
           : introduce // ignore: cast_nullable_to_non_nullable
               as String?,
-      subImages: subImages == freezed
-          ? _value.subImages
-          : subImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
       twitterAccount: twitterAccount == freezed
           ? _value.twitterAccount
           : twitterAccount // ignore: cast_nullable_to_non_nullable
@@ -201,9 +186,8 @@ class _$_Store extends _Store {
   const _$_Store(
       {required this.storeName,
       required this.location,
-      this.topImage,
+      this.Images,
       this.introduce,
-      this.subImages,
       this.twitterAccount,
       this.instaAcount})
       : super._();
@@ -216,11 +200,9 @@ class _$_Store extends _Store {
   @override
   final String location;
   @override
-  final String? topImage;
+  final List<String>? Images;
   @override
   final String? introduce;
-  @override
-  final List<String>? subImages;
   @override
   final String? twitterAccount;
   @override
@@ -228,7 +210,7 @@ class _$_Store extends _Store {
 
   @override
   String toString() {
-    return 'Store(storeName: $storeName, location: $location, topImage: $topImage, introduce: $introduce, subImages: $subImages, twitterAccount: $twitterAccount, instaAcount: $instaAcount)';
+    return 'Store(storeName: $storeName, location: $location, Images: $Images, introduce: $introduce, twitterAccount: $twitterAccount, instaAcount: $instaAcount)';
   }
 
   @override
@@ -238,9 +220,8 @@ class _$_Store extends _Store {
             other is _Store &&
             const DeepCollectionEquality().equals(other.storeName, storeName) &&
             const DeepCollectionEquality().equals(other.location, location) &&
-            const DeepCollectionEquality().equals(other.topImage, topImage) &&
+            const DeepCollectionEquality().equals(other.Images, Images) &&
             const DeepCollectionEquality().equals(other.introduce, introduce) &&
-            const DeepCollectionEquality().equals(other.subImages, subImages) &&
             const DeepCollectionEquality()
                 .equals(other.twitterAccount, twitterAccount) &&
             const DeepCollectionEquality()
@@ -252,9 +233,8 @@ class _$_Store extends _Store {
       runtimeType,
       const DeepCollectionEquality().hash(storeName),
       const DeepCollectionEquality().hash(location),
-      const DeepCollectionEquality().hash(topImage),
+      const DeepCollectionEquality().hash(Images),
       const DeepCollectionEquality().hash(introduce),
-      const DeepCollectionEquality().hash(subImages),
       const DeepCollectionEquality().hash(twitterAccount),
       const DeepCollectionEquality().hash(instaAcount));
 
@@ -273,9 +253,8 @@ abstract class _Store extends Store {
   const factory _Store(
       {required String storeName,
       required String location,
-      String? topImage,
+      List<String>? Images,
       String? introduce,
-      List<String>? subImages,
       String? twitterAccount,
       String? instaAcount}) = _$_Store;
   const _Store._() : super._();
@@ -287,11 +266,9 @@ abstract class _Store extends Store {
   @override
   String get location;
   @override
-  String? get topImage;
+  List<String>? get Images;
   @override
   String? get introduce;
-  @override
-  List<String>? get subImages;
   @override
   String? get twitterAccount;
   @override

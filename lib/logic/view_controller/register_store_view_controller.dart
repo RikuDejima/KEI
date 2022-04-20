@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:key/entity/store.dart';
 import 'package:key/logic/repository/base_repository.dart';
 import 'package:key/logic/state/common/firebase_user_state.dart';
 import 'package:key/logic/state/common/store_state.dart';
@@ -12,7 +13,6 @@ import 'package:key/view/screen/store_profile_screen.dart';
 
 final registerStoreViewController =
     Provider((ref) => RegisterStoreViewController(ref.read));
-final imagePcker = ImagePicker();
 
 final storeNameState = StateProvider<String?>((ref) => null);
 final locationState = StateProvider<String?>((ref) => null);
@@ -34,9 +34,9 @@ class RegisterStoreViewController {
       'location': _read(locationState.notifier).state,
     }).catchError((e) => print(e));
 
-    _read(storeDataState.notifier).state = _read(storeDataState)?.copyWith(
+    _read(storeDataState.notifier).state = Store(
         storeName: _read(storeNameState.notifier).state!,
-        location: _read(locationState.notifier).state!);
+        location: _read(locationState.notifier).state!,);
 
     _read(pages).add(StoreProfileScreen());
     _read(bottomNavigationBarItems).add(const BottomNavigationBarItem(

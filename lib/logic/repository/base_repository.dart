@@ -7,6 +7,9 @@ enum Collection {
   store,
 }
 
+// enum StorageParent {
+// }
+
 extension CollectionExtension on Collection {
   String get key => toString().split('.').last;
 }
@@ -14,7 +17,7 @@ extension CollectionExtension on Collection {
 abstract class BaseRepository {
   BaseRepository(this._read);
   final Reader _read;
-  String get uid => _read(firebaseUserState)!.uid;
+  String? get uid => _read(firebaseUserState.notifier).state?.uid;
 }
 
 class FirestoreResponse<T> extends CommonResponse<T> {

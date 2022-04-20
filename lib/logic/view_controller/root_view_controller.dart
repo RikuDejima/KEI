@@ -148,7 +148,7 @@ class RootViewController {
       if (firebaseUser != null) {
         _read(loginLifeCycleState.notifier).state = LoginLifeCycle.login;
         userResponce = await _read(userRepository).getUser(firebaseUser.uid);
-        storeResponce = await _read(storeRepository).getStore(firebaseUser.uid); 
+        storeResponce = await _read(storeRepository).getStore(firebaseUser.uid);
       } else {
         _read(loginLifeCycleState.notifier).state = LoginLifeCycle.initializing;
         userResponce = null;
@@ -164,7 +164,7 @@ class RootViewController {
         _read(firebaseUserState.notifier).state = firebaseUser;
         _read(routeController).replace(AppRoute.home);
         return;
-      } 
+      }
       _read(firebaseResultStatus.notifier).state =
           FirebaseResultStatus.Successful;
     } on FirebaseException catch (e) {

@@ -373,7 +373,7 @@ PODS:
     - Firebase/Crashlytics (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_storage (10.2.8):
+  - firebase_storage (9.0.0):
     - Firebase/Storage (= 8.9.0)
     - firebase_core
     - Flutter
@@ -538,7 +538,7 @@ SPEC CHECKSUMS:
   firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
   firebase_crashlytics: ed8c1d66dc407d617cbed798f05a5d9115da7494
-  firebase_storage: a31811987011fb068a082814b2a09cdcac8ce389
+  firebase_storage: 0579cdc98c774398fd5c9413ff32ea2ad7246159
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
