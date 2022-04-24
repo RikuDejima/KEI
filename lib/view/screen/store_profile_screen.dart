@@ -7,6 +7,9 @@ import 'package:key/logic/controller/route_controller.dart';
 import 'package:key/logic/state/common/store_state.dart';
 import 'package:key/logic/view_controller/store_profile_view_controller.dart';
 import 'package:key/view/util/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 
 class StoreProfileScreen extends HookConsumerWidget {
   @override
@@ -38,19 +41,39 @@ class StoreProfileScreen extends HookConsumerWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-        SizedBox(height: 15),
+        SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                storeData!.storeName,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: textColor,
-                  fontWeight: FontWeight.w600,
-                ),
+              Row(
+                children: [
+                  Text(
+                    storeData!.storeName,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    decoration: BoxDecoration(),
+                    child: CircleAvatar(
+                      backgroundColor: Color(0xFFE2BF62),
+                      foregroundColor: Colors.white,
+                      radius: 17,
+                      child: IconButton(
+                        onPressed: () {
+                          launchUrlString(storeData.location);
+                        },
+                        icon: Icon(Icons.location_on),
+                        padding: EdgeInsets.all(0),
+                      ),
+                    ),
+                  )
+                ],
               ),
               Text(
                 storeData.introduce ?? '',
@@ -59,6 +82,7 @@ class StoreProfileScreen extends HookConsumerWidget {
                   color: textColor,
                 ),
               ),
+              SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,
                 child: TextButton(

@@ -35,11 +35,8 @@ class RootScreen extends HookConsumerWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: TextFormField(
-                    // initialValue: 'メールアドレス',
-                    onFieldSubmitted: (value) =>
+                    onChanged: (value) =>
                         ref.read(mailAddress.notifier).state = value,
-                    // controller: TextEditingController(
-                    //     text: ref.read(mailAddress.notifier).state),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) =>
                         ref.read(rootViewController).validateEmail(value),

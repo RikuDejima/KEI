@@ -41,9 +41,10 @@ class EditStoreImage {
 //     StateProvider<Store>((ref) => ref.read(storeDataState)!);
 final editStoreProfileItemsState =
     StateProvider<Map<String, dynamic>>((ref) => {
-          'storeName': ref.watch(storeDataState)?.storeName,
           'Images': ref.watch(storeDataState)?.Images,
+          'storeName': ref.watch(storeDataState)?.storeName,
           'introduce': ref.watch(storeDataState)?.introduce,
+          'location': ref.watch(storeDataState)?.location,
         });
 
 final editStoreImages = StateProvider<List<EditStoreImage>>((ref) => []);
@@ -100,12 +101,24 @@ class EditStoreProfileViewController {
       'storeName': _read(storeDataState.notifier).state?.storeName,
       'Images': _read(storeDataState.notifier).state?.Images,
       'introduce': _read(storeDataState.notifier).state?.introduce,
+      'location': _read(storeDataState.notifier).state?.location,
     };
     List _images = _initStoreProfileItems['Images'];
     if (_images.isNotEmpty &&
         _read(storeImageUrlsState.notifier).state.isNotEmpty) {
       _read(editStoreImages.notifier).update((state) =>
           [EditStoreImage(url: _read(storeImageUrlsState.notifier).state[0])]);
+    }
+  }
+
+  String? mapLinkValidation(String? url) {
+    if (url != null &&
+        Uri.parse(url).isAbsolute &&
+        (url.contains('https://www.google.co.jp/maps/') ||
+            url.contains('https://g.page/'))) {
+      return null;
+    } else {
+      return 'GoogleMapのリンクを貼ってください';
     }
   }
 
@@ -121,7 +134,7 @@ class EditStoreProfileViewController {
     });
     print('$updatedData:updatedData');
     if (updatedData.isEmpty) return true;
-    // try {
+    try {
       await FirebaseFirestore.instance
           .collection(Collection.store.key)
           .doc(_read(firebaseUserState.notifier).state!.uid)
@@ -155,11 +168,9 @@ class EditStoreProfileViewController {
       } else {
         return true;
       }
-    // } catch (e) {
-    //   print(updatedData);
-    //   print('$e:error');
-    //   return true;
-    // }
-    // return true;
+    } catch (e) {
+      print('$e:error');
+      return true;
+    }
   }
 }
