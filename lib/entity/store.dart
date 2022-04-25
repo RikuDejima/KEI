@@ -14,6 +14,10 @@ class Store with _$Store {
     String? introduce,
     String? twitterAccount,
     String? instaAcount,
+    String? advertisementImage,
+    String? advertisementMessage,
+    String? emailInvitationMessage,
+    List<String>? cooperativeStores, 
   }) = _Store;
 
   factory Store.fromJson(Map<String, dynamic> json) => _$StoreFromJson(json);

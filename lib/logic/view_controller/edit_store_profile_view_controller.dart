@@ -39,56 +39,61 @@ class EditStoreImage {
 
 // final storeProfileItemsState =
 //     StateProvider<Store>((ref) => ref.read(storeDataState)!);
-final editStoreProfileItemsState =
-    StateProvider<Map<String, dynamic>>((ref) => {
-          'Images': ref.watch(storeDataState)?.Images,
-          'storeName': ref.watch(storeDataState)?.storeName,
-          'introduce': ref.watch(storeDataState)?.introduce,
-          'location': ref.watch(storeDataState)?.location,
-        });
+final editStoreItemsState = StateProvider<Map<String, dynamic>>((ref) => {
+      'Images': ref.watch(storeDataState)?.Images,
+      'storeName': ref.watch(storeDataState)?.storeName,
+      'introduce': ref.watch(storeDataState)?.introduce,
+      'location': ref.watch(storeDataState)?.location,
+      'advertisementImage': ref.watch(storeDataState)?.advertisementImage,
+    });
 
 final editStoreImages = StateProvider<List<EditStoreImage>>((ref) => []);
-//   List images = [];
-//   final storeRef = FirebaseStorage.instance
-//       .ref()
-//       .child('store/${ref.read(firebaseUserState)!.uid}');
-//   storeRef.child('topImage').getDownloadURL().then((value) {
-//     images[0] = value;
-//   });
-//   return images;
-// });
 
 class EditStoreProfileViewController {
   final Reader _read;
   EditStoreProfileViewController(this._read);
-  void takePicture() async {
+  Future<void> takePicture({required bool isAdvertisement}) async {
     final picker = ImagePicker();
-    final Future<XFile?> Image = picker.pickImage(source: ImageSource.camera);
+    final cropper = ImageCropper();
+    picker.pickImage(source: ImageSource.gallery).then((xFile) {
+      cropper
+          .cropImage(
+              sourcePath: xFile!.path,
+              aspectRatio: CropAspectRatio(ratioX: 375, ratioY: 197))
+          .then((file) {
+        if (isAdvertisement) {
+          _read(editStoreItemsState.notifier).state['advertisementImages'] = [xFile.name];
+          _read(editStoreImages.notifier).state = [EditStoreImage(file: file)];
+        } else {
+          _read(editStoreItemsState.notifier).state['Images'] = [xFile.name];
+          _read(editStoreImages.notifier).state = [EditStoreImage(file: file)];
+        }
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 
-  void chooseImage({required isTop}) async {
+  Future<void> chooseImage({required bool isAdvertisement}) async {
     final picker = ImagePicker();
     final cropper = ImageCropper();
     final storeImasgeRef = FirebaseStorage.instance
         .ref()
         .child('store/${_read(firebaseUserState)!.uid}');
-    picker.pickImage(source: ImageSource.gallery).then((image) {
-      //     'store/${_read(firebaseUserState)!.uid}/topImage';
-      // _read(storeImages.notifier).state = [];
-      if (image != null) {
-        // final images = _read(storeProfileItemsState.notifier).state['Images'] as List;
-        cropper
-            .cropImage(
-                sourcePath: image.path,
-                aspectRatio: CropAspectRatio(ratioX: 375, ratioY: 197))
-            .then((file) {
-          _read(editStoreProfileItemsState.notifier).state['Images'] = [
-            image.name
-          ];
+    picker.pickImage(source: ImageSource.gallery).then((xFile) {
+      cropper
+          .cropImage(
+              sourcePath: xFile!.path,
+              aspectRatio: CropAspectRatio(ratioX: 375, ratioY: 197))
+          .then((file) {
+        if (isAdvertisement) {
+          _read(editStoreItemsState.notifier).state['advertisementImages'] = [xFile.name];
           _read(editStoreImages.notifier).state = [EditStoreImage(file: file)];
-          print(_read(editStoreProfileItemsState.notifier).state);
-        });
-      }
+        } else {
+          _read(editStoreItemsState.notifier).state['Images'] = [xFile.name];
+          _read(editStoreImages.notifier).state = [EditStoreImage(file: file)];
+        }
+      });
     }).catchError((e) {
       print(e);
     });
@@ -96,7 +101,7 @@ class EditStoreProfileViewController {
 
   Map<String, dynamic> _initStoreProfileItems = {};
   Future<void> initState() async {
-    print(_read(editStoreProfileItemsState.notifier).state);
+    print(_read(editStoreItemsState.notifier).state);
     _initStoreProfileItems = {
       'storeName': _read(storeDataState.notifier).state?.storeName,
       'Images': _read(storeDataState.notifier).state?.Images,
@@ -123,22 +128,21 @@ class EditStoreProfileViewController {
   }
 
   Future<bool> save() async {
-    final Map<String, dynamic> updatedData = {};
-    final editStoreProfileItems =
-        _read(editStoreProfileItemsState.notifier).state;
+    final Map<String, dynamic> editedData = {};
+    final editStoreProfileItems = _read(editStoreItemsState.notifier).state;
 
-    print('${_read(editStoreProfileItemsState.notifier).state}:editState');
+    print('${_read(editStoreItemsState.notifier).state}:editState');
     print('$_initStoreProfileItems:initState');
-    _read(editStoreProfileItemsState.notifier).state.forEach((key, value) {
-      if (value != _initStoreProfileItems[key]) updatedData[key] = value;
+    _read(editStoreItemsState.notifier).state.forEach((key, value) {
+      if (value != _initStoreProfileItems[key]) editedData[key] = value;
     });
-    print('$updatedData:updatedData');
-    if (updatedData.isEmpty) return true;
+    print('$editedData:updatedData');
+    if (editedData.isEmpty) return true;
     try {
       await FirebaseFirestore.instance
           .collection(Collection.store.key)
           .doc(_read(firebaseUserState.notifier).state!.uid)
-          .update(updatedData)
+          .update(editedData)
           .catchError((e) {
         print(e);
         return;
@@ -150,18 +154,24 @@ class EditStoreProfileViewController {
                 Images: editStoreProfileItems['Images'],
                 introduce: editStoreProfileItems['introduce'],
               );
-      print(updatedData);
-      if (updatedData.containsKey('Images')) {
-        final imagesRef = _read(storeRepository)
-            .storageRef()
-            .child('${_read(firebaseUserState.notifier).state!.uid}');
-        final images = updatedData['Images'] as List<String>;
-        print(images);
-        await Future.forEach(images, (String image) async {
+      print(editedData);
+      if (editedData.containsKey('Images')) {
+        final imagesRef = _read(storeRepository).storageRef();
+        final editedImages = editedData['Images'] as List<String>;
+        final imageUrls = [];
+        print(editedImages);
+        await Future.forEach(editedImages, (String image) async {
           await imagesRef
               .child(image)
               .putFile(_read(editStoreImages.notifier).state[0].file!);
+          await imagesRef
+              .child(image)
+              .getDownloadURL()
+              .then((url) => imageUrls.add(url));
         });
+        _read(storeImageUrlsState.notifier).state = [...imageUrls];
+        // final imageRef = _read(storeRepository).storageRef().child('$element');
+        // await imageRef.getDownloadURL().then((value) => images.add(value));
         print('uploaded file');
         print(_read(editStoreImages.notifier).state[0]);
         return true;

@@ -27,7 +27,11 @@ class _$StoreTearOff {
       List<String?>? Images,
       String? introduce,
       String? twitterAccount,
-      String? instaAcount}) {
+      String? instaAcount,
+      String? advertisementImage,
+      String? advertisementMessage,
+      String? emailInvitationMessage,
+      List<String>? cooperativeStores}) {
     return _Store(
       storeName: storeName,
       location: location,
@@ -35,6 +39,10 @@ class _$StoreTearOff {
       introduce: introduce,
       twitterAccount: twitterAccount,
       instaAcount: instaAcount,
+      advertisementImage: advertisementImage,
+      advertisementMessage: advertisementMessage,
+      emailInvitationMessage: emailInvitationMessage,
+      cooperativeStores: cooperativeStores,
     );
   }
 
@@ -54,6 +62,10 @@ mixin _$Store {
   String? get introduce => throw _privateConstructorUsedError;
   String? get twitterAccount => throw _privateConstructorUsedError;
   String? get instaAcount => throw _privateConstructorUsedError;
+  String? get advertisementImage => throw _privateConstructorUsedError;
+  String? get advertisementMessage => throw _privateConstructorUsedError;
+  String? get emailInvitationMessage => throw _privateConstructorUsedError;
+  List<String>? get cooperativeStores => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -70,7 +82,11 @@ abstract class $StoreCopyWith<$Res> {
       List<String?>? Images,
       String? introduce,
       String? twitterAccount,
-      String? instaAcount});
+      String? instaAcount,
+      String? advertisementImage,
+      String? advertisementMessage,
+      String? emailInvitationMessage,
+      List<String>? cooperativeStores});
 }
 
 /// @nodoc
@@ -89,6 +105,10 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
     Object? introduce = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
+    Object? advertisementImage = freezed,
+    Object? advertisementMessage = freezed,
+    Object? emailInvitationMessage = freezed,
+    Object? cooperativeStores = freezed,
   }) {
     return _then(_value.copyWith(
       storeName: storeName == freezed
@@ -115,6 +135,22 @@ class _$StoreCopyWithImpl<$Res> implements $StoreCopyWith<$Res> {
           ? _value.instaAcount
           : instaAcount // ignore: cast_nullable_to_non_nullable
               as String?,
+      advertisementImage: advertisementImage == freezed
+          ? _value.advertisementImage
+          : advertisementImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      advertisementMessage: advertisementMessage == freezed
+          ? _value.advertisementMessage
+          : advertisementMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      emailInvitationMessage: emailInvitationMessage == freezed
+          ? _value.emailInvitationMessage
+          : emailInvitationMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cooperativeStores: cooperativeStores == freezed
+          ? _value.cooperativeStores
+          : cooperativeStores // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -130,7 +166,11 @@ abstract class _$StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       List<String?>? Images,
       String? introduce,
       String? twitterAccount,
-      String? instaAcount});
+      String? instaAcount,
+      String? advertisementImage,
+      String? advertisementMessage,
+      String? emailInvitationMessage,
+      List<String>? cooperativeStores});
 }
 
 /// @nodoc
@@ -150,6 +190,10 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
     Object? introduce = freezed,
     Object? twitterAccount = freezed,
     Object? instaAcount = freezed,
+    Object? advertisementImage = freezed,
+    Object? advertisementMessage = freezed,
+    Object? emailInvitationMessage = freezed,
+    Object? cooperativeStores = freezed,
   }) {
     return _then(_Store(
       storeName: storeName == freezed
@@ -176,6 +220,22 @@ class __$StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res>
           ? _value.instaAcount
           : instaAcount // ignore: cast_nullable_to_non_nullable
               as String?,
+      advertisementImage: advertisementImage == freezed
+          ? _value.advertisementImage
+          : advertisementImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      advertisementMessage: advertisementMessage == freezed
+          ? _value.advertisementMessage
+          : advertisementMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      emailInvitationMessage: emailInvitationMessage == freezed
+          ? _value.emailInvitationMessage
+          : emailInvitationMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cooperativeStores: cooperativeStores == freezed
+          ? _value.cooperativeStores
+          : cooperativeStores // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -189,7 +249,11 @@ class _$_Store extends _Store {
       this.Images,
       this.introduce,
       this.twitterAccount,
-      this.instaAcount})
+      this.instaAcount,
+      this.advertisementImage,
+      this.advertisementMessage,
+      this.emailInvitationMessage,
+      this.cooperativeStores})
       : super._();
 
   factory _$_Store.fromJson(Map<String, dynamic> json) =>
@@ -207,10 +271,18 @@ class _$_Store extends _Store {
   final String? twitterAccount;
   @override
   final String? instaAcount;
+  @override
+  final String? advertisementImage;
+  @override
+  final String? advertisementMessage;
+  @override
+  final String? emailInvitationMessage;
+  @override
+  final List<String>? cooperativeStores;
 
   @override
   String toString() {
-    return 'Store(storeName: $storeName, location: $location, Images: $Images, introduce: $introduce, twitterAccount: $twitterAccount, instaAcount: $instaAcount)';
+    return 'Store(storeName: $storeName, location: $location, Images: $Images, introduce: $introduce, twitterAccount: $twitterAccount, instaAcount: $instaAcount, advertisementImage: $advertisementImage, advertisementMessage: $advertisementMessage, emailInvitationMessage: $emailInvitationMessage, cooperativeStores: $cooperativeStores)';
   }
 
   @override
@@ -225,7 +297,15 @@ class _$_Store extends _Store {
             const DeepCollectionEquality()
                 .equals(other.twitterAccount, twitterAccount) &&
             const DeepCollectionEquality()
-                .equals(other.instaAcount, instaAcount));
+                .equals(other.instaAcount, instaAcount) &&
+            const DeepCollectionEquality()
+                .equals(other.advertisementImage, advertisementImage) &&
+            const DeepCollectionEquality()
+                .equals(other.advertisementMessage, advertisementMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.emailInvitationMessage, emailInvitationMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.cooperativeStores, cooperativeStores));
   }
 
   @override
@@ -236,7 +316,11 @@ class _$_Store extends _Store {
       const DeepCollectionEquality().hash(Images),
       const DeepCollectionEquality().hash(introduce),
       const DeepCollectionEquality().hash(twitterAccount),
-      const DeepCollectionEquality().hash(instaAcount));
+      const DeepCollectionEquality().hash(instaAcount),
+      const DeepCollectionEquality().hash(advertisementImage),
+      const DeepCollectionEquality().hash(advertisementMessage),
+      const DeepCollectionEquality().hash(emailInvitationMessage),
+      const DeepCollectionEquality().hash(cooperativeStores));
 
   @JsonKey(ignore: true)
   @override
@@ -256,7 +340,11 @@ abstract class _Store extends Store {
       List<String?>? Images,
       String? introduce,
       String? twitterAccount,
-      String? instaAcount}) = _$_Store;
+      String? instaAcount,
+      String? advertisementImage,
+      String? advertisementMessage,
+      String? emailInvitationMessage,
+      List<String>? cooperativeStores}) = _$_Store;
   const _Store._() : super._();
 
   factory _Store.fromJson(Map<String, dynamic> json) = _$_Store.fromJson;
@@ -273,6 +361,14 @@ abstract class _Store extends Store {
   String? get twitterAccount;
   @override
   String? get instaAcount;
+  @override
+  String? get advertisementImage;
+  @override
+  String? get advertisementMessage;
+  @override
+  String? get emailInvitationMessage;
+  @override
+  List<String>? get cooperativeStores;
   @override
   @JsonKey(ignore: true)
   _$StoreCopyWith<_Store> get copyWith => throw _privateConstructorUsedError;

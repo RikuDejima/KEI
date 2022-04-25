@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:key/main.dart';
 import 'package:key/view/screen/edit_profile_screen.dart';
+import 'package:key/view/screen/edit_store_advertisement_screen.dart';
 import 'package:key/view/screen/edit_store_profile_screen.dart';
 import 'package:key/view/screen/register_screen.dart';
 import 'package:key/view/screen/register_store_screen.dart';
@@ -18,6 +19,7 @@ enum AppRoute {
   editProfile,
   registerStore,
   editStoreProfile,
+  editAdvertisement,
 }
 
 extension AppRouteExt on AppRoute {
@@ -27,12 +29,12 @@ extension AppRouteExt on AppRoute {
         return '/';
       case AppRoute.registerUser:
        return '/register';
-      case AppRoute.editStoreProfile:
-        return '/home/editProfile';
       case AppRoute.registerStore:
         return '/home/registerStore';
       case AppRoute.editStoreProfile:
         return '/home/editStoreProfile';
+      case AppRoute.editAdvertisement:
+        return '/home/editAdvertisement';
       default:
         return '/${toString().split('.').last}';
     }
@@ -49,6 +51,7 @@ final route = RouteMap(routes: {
   AppRoute.editStoreProfile.path: (data) => MaterialPage(child: EditProfileScreen()),
   AppRoute.registerStore.path: (data) => MaterialPage(child: RegisterStoreScreen()),
   AppRoute.editStoreProfile.path: (data) => MaterialPage(child: EditStoreProfileScreen()),
+  AppRoute.editAdvertisement.path: (data) => MaterialPage(child: EditStoreAdvertisementScreen(),),
 });
 
 final routemaster = RoutemasterDelegate(routesBuilder: (context) => route);

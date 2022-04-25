@@ -37,7 +37,7 @@ class CustomeruserProfielPage extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: Color(0xFF553A03), height: 0),
+          Divider(color: AppColor.dividerColor, height: 0),
           GestureDetector(
             onTap: () => ref.read(routeController).push(AppRoute.editStoreProfile),
             child: Row(
@@ -66,9 +66,9 @@ class CustomeruserProfielPage extends HookConsumerWidget {
               ],
             ),
           ),
-          const Divider(color: Color(0xFF553A03), height: 0),
+          const Divider(color: AppColor.dividerColor, height: 0),
           const SizedBox(height: 15),
-          const Divider(color: Color(0xFF553A03), height: 0),
+          const Divider(color: AppColor.dividerColor, height: 0),
           TextButton(
             onPressed: () =>
                 ref.read(routeController).push(AppRoute.registerStore),
@@ -80,7 +80,7 @@ class CustomeruserProfielPage extends HookConsumerWidget {
               ),
             ),
           ),
-          Divider(color: Color(0xFF553A03), height: 0),
+          Divider(color: AppColor.dividerColor, height: 0),
         ],
       ),
     );

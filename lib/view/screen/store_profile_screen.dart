@@ -10,7 +10,6 @@ import 'package:key/view/util/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
 class StoreProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,6 +38,17 @@ class StoreProfileScreen extends HookConsumerWidget {
                 child: Image.network(
                   ref.watch(storeImageUrlsState)[0],
                   fit: BoxFit.cover,
+                  // errorBuilder: (context, error, stackTrace) {
+                  //   return Container(
+                  //     color: Color(0xFFD8D8D8),
+                  //     height: screenWidth * 0.53,
+                  //     width: double.infinity,
+                  //     child: const Text(
+                  //       '',
+                  //       style: TextStyle(fontSize: 30),
+                  //     ),
+                  //   );
+                  // },
                 ),
               ),
         SizedBox(height: 10),
@@ -59,9 +69,18 @@ class StoreProfileScreen extends HookConsumerWidget {
                   ),
                   SizedBox(width: 10),
                   Container(
-                    decoration: BoxDecoration(),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFFB7B7B7),
+                          blurRadius: 6,
+                          offset: Offset(0, 3),
+                        )
+                      ],
+                    ),
                     child: CircleAvatar(
-                      backgroundColor: Color(0xFFE2BF62),
+                      backgroundColor: AppColor.accentColor,
                       foregroundColor: Colors.white,
                       radius: 17,
                       child: IconButton(
@@ -103,7 +122,48 @@ class StoreProfileScreen extends HookConsumerWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                child: Column(children: [
+                  storeData.advertisementImage == null
+                      ? Container(
+                          color: Color(0xFFD8D8D8),
+                          height: screenWidth * 0.53,
+                          width: double.infinity,
+                          alignment: Alignment.bottomRight,
+                          padding: EdgeInsets.all(5),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  AppColor.accentColor),
+                              padding: MaterialStateProperty.all(
+                                const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)),
+                              ),
+                            ),
+                            child: const Text(
+                              '宣伝する',
+                              style: TextStyle(
+                                color: AppColor.textColor,
+                              ),
+                            ),
+                            onPressed: () {
+                              ref.read(routeController).push(AppRoute.editAdvertisement);
+                            },
+                          ),
+                        )
+                      : Image.network(
+                          storeData.advertisementImage!,
+                          fit: BoxFit.cover,
+                        )
+                ]),
+              ),
             ],
           ),
         )

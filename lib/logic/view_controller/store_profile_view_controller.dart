@@ -15,6 +15,7 @@ class StoreProfileViewController {
       await Future.forEach(_read(storeDataState.notifier).state!.Images!,
           (element) async {
         final imageRef = _read(storeRepository).storageRef().child('$element');
+        print(imageRef.fullPath);
         await imageRef.getDownloadURL().then((value) => images.add(value));
       });
       _read(storeImageUrlsState.notifier).update((state) => [...images]);
