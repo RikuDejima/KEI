@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:key/logic/state/common/store_state.dart';
 import 'package:key/logic/view_controller/edit_store_profile_view_controller.dart';
 import 'package:key/view/screen/edit_store_profile_screen.dart';
+import 'package:key/view/util/theme.dart';
 
 class EditStoreAdvertisementScreen extends HookConsumerWidget {
   @override
@@ -60,48 +61,36 @@ class EditStoreAdvertisementScreen extends HookConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('店名'),
+                        Text('お客様へのメッセージ'),
                         TextField(
                           onChanged: (str) => ref
                               .read(editStoreItemsState.notifier)
-                              .state['storeName'] = str,
+                              .state['advertisementMessage'] = str,
                           maxLength: 120,
-                          controller:
-                              TextEditingController(text: storeData.storeName),
+                          controller: TextEditingController(
+                              text: storeData.advertisementMessage),
                         ),
                         SizedBox(height: 25),
-                        Text('店舗紹介'),
+                        Text('e-mailでの招待メッセージ'),
                         TextField(
                           onChanged: (str) {
                             ref
                                 .read(editStoreItemsState.notifier)
-                                .state['introduce'] = str;
+                                .state[' emailInvitationMessage'] = str;
                           },
                           maxLength: 120,
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
-                          controller:
-                              TextEditingController(text: storeData.introduce),
+                          controller: TextEditingController(
+                              text: storeData.emailInvitationMessage),
                         ),
                         SizedBox(height: 25),
-                        Text('所在地(GoogleMapリンク)'),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'GoogleMapでお店のリンクをコピーし、貼り付けてください。',
-                            hintStyle: TextStyle(fontSize: 12),
-                          ),
-                          initialValue: storeData.location,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            return viewController.mapLinkValidation(value);
-                          },
-                          onChanged: (str) {
-                            ref
-                                .read(editStoreItemsState.notifier)
-                                .state['location'] = str;
-                          },
+                        Text('紹介するお店'),
+                        
+                        Divider(
+                          thickness: 3,
+                          color: AppColor.dividerColor,
                         ),
-                        SizedBox(height: 25),
                       ],
                     ),
                   ),
