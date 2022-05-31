@@ -1,6 +1,6 @@
-# key
+# flutter_practice_demo_app
 
-A new Flutter project.
+This is my practice of building flutter app.
 
 ## Getting Started
 
